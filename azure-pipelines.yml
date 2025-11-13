@@ -1,0 +1,29 @@
+
+trigger: none
+
+pool: pipe
+
+steps: 
+- task: TerraformInstaller@1
+  inputs:
+    terraformVersion: 'latest'
+
+  displayName: Terraform init
+- task: TerraformTask@5
+  inputs:
+      provider: 'azurerm'
+      command: 'init'
+      backendServiceArm: 'Azure subscription 1(5ed71b72-e131-4c8d-8029-6d14191c6dfe)'
+      backendAzureRmStorageAccountName: 'storeyo'
+      backendAzureRmContainerName: 'haha'
+      backendAzureRmKey: 'terraform.tfstate'
+
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'validate'
+
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'plan'
